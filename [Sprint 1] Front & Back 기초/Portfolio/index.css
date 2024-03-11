@@ -1,6 +1,5 @@
 body {
   margin: 0;
-  /* background-color: #fafbfd; */
   background-color: #f8f8f8;
   font-family: "Noto Sans KR", sans-serif;
   width: 100vw;
@@ -10,9 +9,19 @@ body {
   flex-direction: column;
   align-items: center;
   justify-content: space-between;
+  animation: fadein 1.5s;
 
   * {
     margin: 0;
+  }
+}
+
+@keyframes fadein {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
   }
 }
 
@@ -74,7 +83,7 @@ footer {
   background-color: #f9e5bd;
   border-radius: 12px;
 
-  font-size: 16px;
+  font-size: 14px;
   font-weight: 600;
   margin: 30px 0px;
   cursor: pointer;
@@ -82,6 +91,7 @@ footer {
   display: flex;
   justify-content: center;
   align-items: center;
+  border: 1px solid #ffd88b;
 }
 
 .button a {
@@ -116,7 +126,7 @@ footer {
   align-items: center;
   background-color: #f8f8f8;
   border-radius: 50%;
-  /* border: 1px solid lightgray; */
+  border: 1px solid rgb(230, 230, 230);
 }
 
 .img_wrapper img {
