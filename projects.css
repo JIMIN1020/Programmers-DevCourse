@@ -10,14 +10,6 @@ body {
   animation: fadein 1.5s;
 }
 
-h1,
-h2,
-h3,
-h4,
-h5 {
-  margin: 0;
-}
-
 @keyframes fadein {
   from {
     opacity: 0;
@@ -40,6 +32,10 @@ header {
   cursor: pointer;
 }
 
+.logo h1 {
+  margin: 0;
+}
+
 .header_title {
   font-size: 20px;
 }
@@ -51,6 +47,10 @@ header {
   gap: 10px;
   padding-top: 50px;
   padding-bottom: 100px;
+}
+
+.title_box h2 {
+  margin: 0;
 }
 
 .project_box {
@@ -78,6 +78,7 @@ header {
 
 .project h4 {
   font-size: 20px;
+  margin: 0;
 }
 
 .project span {
