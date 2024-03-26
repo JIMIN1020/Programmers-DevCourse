@@ -48,16 +48,15 @@ router.post("/login", (req, res) => {
 
 /* ----- 회원가입 API ----- */
 router.post("/join", (req, res) => {
-  const newUser = req.body; // 신규 유저 정보
-  const id = db.size + 1; // db id
+  const { userId } = req.body; // 신규 유저 정보
 
   // 회원 가입할 유저 정보가 있다면? 등록!
-  if (Object.keys(newUser).length > 0) {
-    db.set(id, newUser);
+  if (Object.keys(req.body).length > 0) {
+    db.set(userId, req.body);
 
     res.status(201).json({
       isSuccess: true,
-      message: `${db.get(id).name}님, 환영합니다!`,
+      message: `${db.get(userId).name}님, 환영합니다!`,
     });
   }
   // 없다면? 에러 응답!
@@ -70,15 +69,14 @@ router.post("/join", (req, res) => {
 });
 
 /* ----- 회원 개별 조회 API ----- */
-router.route("/users/:id").post((req, res) => {
-  const { id } = req.params; // 신규 유저 정보
-  id = id * 1; // number로 변환
+router.route("/users").post((req, res) => {
+  const { userId } = req.body; // 신규 유저 정보
 
-  // 회원 가입할 유저 정보가 있다면? 반환!
-  if (db.get(id)) {
+  // 유저 정보가 있다면? 반환!
+  if (db.get(userId)) {
     res.status(200).json({
       isSuccess: true,
-      userData: db.get(id),
+      userData: db.get(userId),
     });
   }
   // 없다면? 에러 응답!

@@ -10,9 +10,11 @@ const db = new Map();
 router
   .route("/")
   .post((req, res) => {
-    if (req.body.channelTitle) {
+    const { userId, channelTitle } = req.body;
+
+    if (userId && channelTitle) {
       const id = db.size + 1; // id 구하기
-      db.set(id, req.body); // db에 등록
+      db.set(id, { userId, channelTitle }); // db에 등록
 
       res.status(201).json({
         isSuccess: true,
@@ -27,18 +29,30 @@ router
     }
   })
   .get((req, res) => {
-    if (db.size > 0) {
+    const id = req.body.userId; // id 받아오기
+
+    // id가 있다면?
+    if (id) {
       // map -> object array로 변경
       const channels = [];
       db.forEach((value, key) => {
-        channels.push(value);
+        if (value.userId === id) channels.push(value);
       });
 
-      res.status(200).json({ isSuccess: true, channels: channels });
+      // 채널이 있으면 반환! 없으면 404
+      if (channels.length > 0) {
+        res.status(200).json({ isSuccess: true, channels: channels });
+      } else {
+        res.status(404).json({
+          isSuccess: false,
+          message: "조회할 채널이 존재하지 않습니다.",
+        });
+      }
     } else {
+      // userId가 없는 경우 = 로그인 만료된 경우, 잘못된 접근
       res.status(404).json({
         isSuccess: false,
-        message: "조회할 채널이 존재하지 않습니다.",
+        message: `로그인이 필요합니다.`,
       });
     }
   });
