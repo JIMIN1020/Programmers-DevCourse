@@ -9,7 +9,4 @@ const connection = mysql.createConnection({
   dateStrings: true, // date를 string으로 받아오기
 });
 
-// query 작성
-connection.query("SELECT * FROM channels;", (err, result, fields) => {
-  console.log(result);
-});
+module.exports = connection;
