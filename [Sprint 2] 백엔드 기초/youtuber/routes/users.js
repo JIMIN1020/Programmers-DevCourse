@@ -8,7 +8,7 @@ router.post("/join", userContoroller.join); // 회원 가입
 
 router
   .route("/users")
-  .get(userContoroller.userInfo) // 회원 개별 조회
-  .delete(userContoroller.userDelete); // 회원 탈퇴
+  .get(userContoroller.getUser) // 회원 개별 조회
+  .delete(userContoroller.deleteUser); // 회원 탈퇴
 
 module.exports = router;

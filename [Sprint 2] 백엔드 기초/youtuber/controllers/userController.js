@@ -13,7 +13,7 @@ exports.login = [
   validationCheck,
   async (req, res) => {
     try {
-      const result = await userService.userLogin(req.body); // service 호출
+      const result = await userService.login(req.body); // service 호출
 
       // 성공 시 응답
       res.cookie("token", result.token, {
@@ -24,9 +24,7 @@ exports.login = [
         .json({ isSuccess: result.isSuccess, message: result.message });
     } catch (err) {
       // 에러 발생 시
-      res
-        .status(err.status ? err.status : 500)
-        .json({ isSuccess: false, message: err.message });
+      res.status(500).json({ isSuccess: false, message: err.message });
     }
   },
 ];
@@ -39,18 +37,16 @@ exports.join = [
   validationCheck,
   async (req, res) => {
     try {
-      const result = await userService.userJoin(req.body);
+      const result = await userService.join(req.body);
       res.status(201).json(result);
     } catch (err) {
-      res
-        .status(err.status ? err.status : 500)
-        .json({ isSuccess: false, message: err.message });
+      res.status(500).json({ isSuccess: false, message: err.message });
     }
   },
 ];
 
 /* ----- 회원 개별 조회 ----- */
-exports.userInfo = [
+exports.getUser = [
   emailValidation(),
   validationCheck,
   async (req, res) => {
@@ -58,15 +54,13 @@ exports.userInfo = [
       const result = await userService.userInfo(req.body.email);
       res.status(200).json(result);
     } catch (err) {
-      res
-        .status(err.status ? err.status : 500)
-        .json({ isSuccess: false, message: err.message });
+      res.status(500).json({ isSuccess: false, message: err.message });
     }
   },
 ];
 
 /* ----- 회원 탈퇴 ----- */
-exports.userDelete = [
+exports.deleteUser = [
   emailValidation(),
   validationCheck,
   async (req, res) => {
@@ -75,9 +69,7 @@ exports.userDelete = [
       res.status(201).json(result);
     } catch (err) {
       console.log(err);
-      res
-        .status(err.status ? err.status : 500)
-        .json({ isSuccess: false, message: err.message });
+      res.status(500).json({ isSuccess: false, message: err.message });
     }
   },
 ];
