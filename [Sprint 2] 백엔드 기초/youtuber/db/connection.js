@@ -1,7 +1,7 @@
-const mysql = require("mysql2");
+const mysql = require("mysql2/promise");
 
 // db 연결하기
-const connection = mysql.createConnection({
+const connection = mysql.createPool({
   host: "localhost",
   user: "root",
   password: "root",

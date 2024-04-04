@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const conn = require("../db");
+const conn = require("../db/connection");
 const { body, validationResult, param } = require("express-validator");
 
 router.use(express.json());
