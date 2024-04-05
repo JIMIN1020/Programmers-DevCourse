@@ -37,7 +37,12 @@ exports.join = [
   validationCheck,
   async (req, res) => {
     try {
-      const result = await userService.join(req.body);
+      // 데이터 처리
+      const { email, name, pw } = req.body;
+      const values = [email, name, pw];
+
+      // 서비스 요청
+      const result = await userService.join(values);
       res.status(201).json(result);
     } catch (err) {
       res.status(500).json({ isSuccess: false, message: err.message });

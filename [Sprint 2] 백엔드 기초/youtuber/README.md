@@ -57,8 +57,8 @@ Youtube를 클론하여 유저 회원가입, 로그인, 회원 탈퇴 로직 등
 │   ├── channelController.js
 │   └── userController.js
 ├── services
-│    ├── channelService.js
-│    └── userService.js
+│   ├── channelService.js
+│   └── userService.js
 └── app.js
 ```
 
@@ -112,7 +112,12 @@ exports.join = [
   validationCheck,
   async (req, res) => {
     try {
-      const result = await userService.join(req.body);
+      // 데이터 처리
+      const { email, name, pw } = req.body;
+      const values = [email, name, pw];
+
+      // 서비스 요청
+      const result = await userService.join(values);
       res.status(201).json(result);
     } catch (err) {
       res.status(500).json({ isSuccess: false, message: err.message });
@@ -136,9 +141,7 @@ const userQuery = require("../query/userQuery");
 require("dotenv").config();
 
 /* ----- 회원가입 API ----- */
-exports.userJoin = async (userData) => {
-  const values = [userData.email, userData.name, userData.pw];
-
+exports.join = async (values) => {
   try {
     const results = await conn.query(userQuery.joinUser, values);
 

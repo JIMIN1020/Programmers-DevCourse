@@ -45,9 +45,7 @@ exports.login = async (userData) => {
 };
 
 /* ----- 회원가입 API ----- */
-exports.join = async (userData) => {
-  const values = [userData.email, userData.name, userData.pw];
-
+exports.join = async (values) => {
   try {
     const results = await conn.query(userQuery.joinUser, values);
 
