@@ -51,10 +51,45 @@ const login = [
 ];
 
 /* ----- 비밀번호 초기화 요청 ----- */
-const requestResetPassword = [];
+const requestResetPassword = [
+  vaildation.emailValidation(),
+  vaildation.validationCheck,
+  async (req, res) => {
+    try {
+      // service 호출
+      const email = req.body.email;
+      const result = await userService.requestResetPassword(email);
+      // 응답
+      res.status(StatusCodes.OK).json(result);
+    } catch (err) {
+      res.status(err.statusCode || 500).json({
+        isSuccess: false,
+        message: err.message,
+      });
+    }
+  },
+];
 
 /* ----- 비밀번호 초기화 ----- */
-const resetPassword = [];
+const resetPassword = [
+  vaildation.pwValidation(),
+  vaildation.validationCheck,
+  async (req, res) => {
+    try {
+      // service 호출
+      const { email, password } = req.body;
+      const result = await userService.resetPassword([password, email]);
+
+      // 응답
+      res.status(StatusCodes.OK).json(result);
+    } catch (err) {
+      res.status(err.statusCode || 500).json({
+        isSuccess: false,
+        message: err.message,
+      });
+    }
+  },
+];
 
 module.exports = {
   join,

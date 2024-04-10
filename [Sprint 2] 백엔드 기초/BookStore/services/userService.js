@@ -3,10 +3,10 @@ const userQuery = require("../queries/userQuery");
 const CustomError = require("../CustomError");
 const { StatusCodes } = require("http-status-codes");
 const jwt = require("jsonwebtoken");
+const crypto = require("crypto");
 require("dotenv").config();
 
 /* ----- 회원가입 ----- */
-// TODO error catch
 const join = async (values) => {
   try {
     const result = await conn.query(userQuery.join, values);
@@ -22,11 +22,11 @@ const join = async (values) => {
   }
 };
 
+/* ----- 로그인 ----- */
 const login = async (email, password) => {
   try {
     const result = await conn.query(userQuery.getUser, email);
     const userData = result[0][0];
-    console.log(userData);
 
     // login 로직
     if (userData && userData.password === password) {
@@ -55,4 +55,42 @@ const login = async (email, password) => {
   }
 };
 
-module.exports = { join, login };
+/* ----- 비밀번호 초기화 요청 ----- */
+const requestResetPassword = async () => {
+  try {
+    const result = await conn.query(userQuery.getUser, email);
+    const userData = result[0][0];
+
+    if (userData) {
+      return {
+        isSuccess: true,
+        email: userData.email,
+        message: "비밀번호 초기화 가능",
+      };
+    } else {
+      throw new CustomError(
+        StatusCodes.UNAUTHORIZED,
+        "존재하지 않는 유저입니다."
+      );
+    }
+  } catch (err) {
+    throw err;
+  }
+};
+
+/* ----- 비밀번호 초기화 ----- */
+const resetPassword = async (values) => {
+  try {
+    const result = await conn.query(userQuery.updatePassword, values);
+    if (result[0].affectedRows > 0) {
+      return {
+        isSuccess: true,
+        message: "비밀번호가 수정되었습니다.",
+      };
+    }
+  } catch (err) {
+    throw err;
+  }
+};
+
+module.exports = { join, login, requestResetPassword, resetPassword };
