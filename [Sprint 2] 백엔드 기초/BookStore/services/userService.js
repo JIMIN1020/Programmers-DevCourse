@@ -1,3 +1,5 @@
+// 4월 10일 과제 제출 - 류지민
+
 const conn = require("../db/connection");
 const userQuery = require("../queries/userQuery");
 const CustomError = require("../CustomError");
@@ -7,9 +9,20 @@ const crypto = require("crypto");
 require("dotenv").config();
 
 /* ----- 회원가입 ----- */
-const join = async (values) => {
+const join = async (email, password) => {
   try {
-    const result = await conn.query(userQuery.join, values);
+    // 비밀번호 암호화
+    const salt = crypto.randomBytes(10).toString("base64");
+    const hashPassword = crypto
+      .pbkdf2Sync(password, salt, 10000, 10, "sha512")
+      .toString("base64");
+
+    // 암호화된 비밀번호, salt를 함께 저장
+    const result = await conn.query(userQuery.join, [
+      email,
+      hashPassword,
+      salt,
+    ]);
 
     if (result[0].affectedRows > 0) {
       return {
@@ -28,8 +41,13 @@ const login = async (email, password) => {
     const result = await conn.query(userQuery.getUser, email);
     const userData = result[0][0];
 
+    // salt 값 꺼내서 비밀번호 암호화 -> db와 비교
+    const hashPassword = crypto
+      .pbkdf2Sync(password, userData.salt, 10000, 10, "sha512")
+      .toString("base64");
+
     // login 로직
-    if (userData && userData.password === password) {
+    if (userData && userData.password === hashPassword) {
       // jwt 발행
       const token = jwt.sign(
         {
@@ -79,9 +97,21 @@ const requestResetPassword = async () => {
 };
 
 /* ----- 비밀번호 초기화 ----- */
-const resetPassword = async (values) => {
+const resetPassword = async (password, email) => {
   try {
-    const result = await conn.query(userQuery.updatePassword, values);
+    // 새로운 salt로 비밀번호 암호화
+    const salt = crypto.randomBytes(10).toString("base64");
+    const hashPassword = crypto
+      .pbkdf2Sync(password, salt, 10000, 10, "sha512")
+      .toString("base64");
+
+    // 새로운 salt, 해싱된 비밀번호 업데이트
+    const result = await conn.query(userQuery.updatePassword, [
+      hashPassword,
+      salt,
+      email,
+    ]);
+
     if (result[0].affectedRows > 0) {
       return {
         isSuccess: true,

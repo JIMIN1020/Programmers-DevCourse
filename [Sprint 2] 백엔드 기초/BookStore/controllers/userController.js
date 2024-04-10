@@ -11,7 +11,7 @@ const join = [
     try {
       // service 호출
       const { email, password } = req.body;
-      const result = await userService.join([email, password]);
+      const result = await userService.join(email, password);
       // 응답
       res.status(StatusCodes.CREATED).json(result);
     } catch (err) {
@@ -78,7 +78,7 @@ const resetPassword = [
     try {
       // service 호출
       const { email, password } = req.body;
-      const result = await userService.resetPassword([password, email]);
+      const result = await userService.resetPassword(password, email);
 
       // 응답
       res.status(StatusCodes.OK).json(result);
