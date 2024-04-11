@@ -14,6 +14,7 @@ const bookRouter = require("./routes/book");
 const orderRouter = require("./routes/order");
 const likeRouter = require("./routes/like");
 const cartRouter = require("./routes/cart");
+const categoryRouter = require("./routes/category");
 
 // router 연결
 app.use("/user", userRouter);
@@ -21,3 +22,4 @@ app.use("/book", bookRouter);
 app.use("/order", orderRouter);
 app.use("/like", likeRouter);
 app.use("/cart", cartRouter);
+app.use("/category", categoryRouter);

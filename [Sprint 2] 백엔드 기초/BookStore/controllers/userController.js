@@ -15,7 +15,7 @@ const join = [
       // 응답
       res.status(StatusCodes.CREATED).json(result);
     } catch (err) {
-      res.status(err.statusCode || 500).json({
+      res.status(err.statusCode || StatusCodes.INTERNAL_SERVER_ERROR).json({
         isSuccess: false,
         message: err.message,
       });
@@ -42,7 +42,7 @@ const login = [
       // 응답
       res.status(StatusCodes.OK).json({ isSuccess, message });
     } catch (err) {
-      res.status(err.statusCode || 500).json({
+      res.status(err.statusCode || StatusCodes.INTERNAL_SERVER_ERROR).json({
         isSuccess: false,
         message: err.message,
       });
@@ -62,7 +62,7 @@ const requestResetPassword = [
       // 응답
       res.status(StatusCodes.OK).json(result);
     } catch (err) {
-      res.status(err.statusCode || 500).json({
+      res.status(err.statusCode || StatusCodes.INTERNAL_SERVER_ERROR).json({
         isSuccess: false,
         message: err.message,
       });
@@ -83,7 +83,7 @@ const resetPassword = [
       // 응답
       res.status(StatusCodes.OK).json(result);
     } catch (err) {
-      res.status(err.statusCode || 500).json({
+      res.status(err.statusCode || StatusCodes.INTERNAL_SERVER_ERROR).json({
         isSuccess: false,
         message: err.message,
       });
