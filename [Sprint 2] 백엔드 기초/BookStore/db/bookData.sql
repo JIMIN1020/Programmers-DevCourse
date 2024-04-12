@@ -31,3 +31,12 @@ VALUES ("효녀 심청", 12, 0, "종이책", 9, "심청아..", "공양미 삼백
 
 INSERT INTO book (title, img, category_id, form, isbn, summary, detail, author, pages, contents, price, published_date)
 VALUES ("혹부리 영감", 22, 2, "ebook", 10, "노래 주머니..", "혹 두개 되버림..", "김영감", 100, "목차입니다.", 20000, "2024-04-05");
+
+// category와 조인
+SELECT * FROM book LEFT JOIN category ON book.category_id = category.id;
+
+// 특정 도서 데이터를 category name과 함께 가져오기
+SELECT * FROM book LEFT JOIN category ON book.category_id = category.id WHERE book.id = ?;
+
+// 신간 조회
+SELECT * FROM book WHERE published_date BETWEEN DATE_SUB(NOW(), INTERVAL 1 MONTH) AND NOW();

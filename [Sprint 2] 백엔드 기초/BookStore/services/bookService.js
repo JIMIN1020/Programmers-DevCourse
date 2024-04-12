@@ -4,32 +4,9 @@ const CustomError = require("../CustomError");
 const { StatusCodes } = require("http-status-codes");
 
 /* ----- 전체 도서 조회 ----- */
-const getAllBooks = async () => {
+const getAllBooks = async (sql, values) => {
   try {
-    const result = await conn.query(bookQuery.getAllBook);
-
-    const bookData = result[0];
-
-    if (bookData) {
-      return {
-        isSuccess: true,
-        result: bookData,
-      };
-    } else {
-      throw new CustomError(
-        StatusCodes.BAD_REQUEST,
-        "데이터가 존재하지 않습니다."
-      );
-    }
-  } catch (err) {
-    throw err;
-  }
-};
-
-/* ----- 카테고리별 도서 목록 조회 ----- */
-const getCategoryList = async (categoryId) => {
-  try {
-    const result = await conn.query(bookQuery.getCategoryList, categoryId);
+    const result = await conn.query(sql, values);
 
     const bookData = result[0];
 
@@ -74,6 +51,5 @@ const getBookDetail = async (id) => {
 
 module.exports = {
   getAllBooks,
-  getCategoryList,
   getBookDetail,
 };

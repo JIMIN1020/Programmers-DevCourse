@@ -1,20 +1,28 @@
-// 4월 11일 과제 - 류지민
-
 const bookService = require("../services/bookService");
+const bookQuery = require("../queries/bookQuery");
 const { StatusCodes } = require("http-status-codes");
 
-/* ----- 전체 도서 & 카테고리별 목록 조회 ----- */
+/* ----- 도서 목록 조회 ----- */
 const getAllBooks = async (req, res) => {
-  let { categoryId } = req.query;
+  let { categoryId, newly } = req.query;
+
+  // sql 구하기 - 전체 / 카테고리별 / 카테고리별 신간 / 전체 신간
+  let sql = bookQuery.getAllBook;
+  let values = [];
+
+  if (categoryId && newly) {
+    sql += bookQuery.getNewlyByCategory;
+    values.push(categoryId);
+  } else if (categoryId) {
+    sql += bookQuery.getAllByCategory;
+    values.push(categoryId);
+  } else if (newly) {
+    sql += bookQuery.getAllNewly;
+  }
 
   try {
-    if (categoryId) {
-      const result = await bookService.getCategoryList(categoryId);
-      res.status(StatusCodes.OK).json(result);
-    } else {
-      const result = await bookService.getAllBooks();
-      res.status(StatusCodes.OK).json(result);
-    }
+    const result = await bookService.getAllBooks(sql, values);
+    res.status(StatusCodes.OK).json(result);
   } catch (err) {
     res.status(err.statusCode || StatusCodes.INTERNAL_SERVER_ERROR).json({
       isSuccess: false,
