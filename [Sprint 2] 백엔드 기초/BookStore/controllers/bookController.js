@@ -47,7 +47,9 @@ const getAllBooks = async (req, res) => {
 /* ----- 도서 상세 조회 ----- */
 const getBookDetail = async (req, res) => {
   try {
-    const result = await bookService.getBookDetail(+req.params.id);
+    const { userId } = req.body;
+    const values = [userId, +req.params.id];
+    const result = await bookService.getBookDetail(values);
     res.status(StatusCodes.OK).json(result);
   } catch (err) {
     res.status(err.statusCode || StatusCodes.INTERNAL_SERVER_ERROR).json({

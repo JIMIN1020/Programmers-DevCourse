@@ -27,9 +27,9 @@ const getAllBooks = async (sql, values) => {
 };
 
 /* ----- 도서 상세 조회 ----- */
-const getBookDetail = async (id) => {
+const getBookDetail = async (values) => {
   try {
-    const result = await conn.query(bookQuery.getBookDetail, id);
+    const result = await conn.query(bookQuery.getBookDetail, values);
 
     const bookData = result[0][0];
 

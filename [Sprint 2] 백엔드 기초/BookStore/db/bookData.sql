@@ -40,3 +40,26 @@ SELECT * FROM book LEFT JOIN category ON book.category_id = category.id WHERE bo
 
 // 신간 조회
 SELECT * FROM book WHERE published_date BETWEEN DATE_SUB(NOW(), INTERVAL 1 MONTH) AND NOW();
+
+// 좋아요
+INSERT INTO likes (userId, liked_bookId) VALUES (1, 1);
+INSERT INTO likes (userId, liked_bookId) VALUES (11, 2);
+INSERT INTO likes (userId, liked_bookId) VALUES (16, 3);
+INSERT INTO likes (userId, liked_bookId) VALUES (16, 1);
+INSERT INTO likes (userId, liked_bookId) VALUES (1, 4);
+INSERT INTO likes (userId, liked_bookId) VALUES (11, 1);
+INSERT INTO likes (userId, liked_bookId) VALUES (18, 2);
+INSERT INTO likes (userId, liked_bookId) VALUES (18, 3);
+INSERT INTO likes (userId, liked_bookId) VALUES (19, 5);
+
+// 좋아요 수 세기
+SELECT COUNT(*) AS likes FROM likes WHERE liked_bookId = ?;
+
+// book 데이터를 '좋아요 수' 컬럼과 함께
+SELECT *, (SELECT COUNT(*) FROM likes WHERE liked_bookId = book.id) AS likes FROM book;
+
+// 도서 상세 조회 시 사용자의 좋아요 여부 & 개수
+SELECT *,
+  (SELECT EXISTS (SELECT * FROM likes WHERE userId = ? AND liked_bookId = book.id)) AS liked,
+  (SELECT COUNT(*) FROM likes WHERE liked_bookId = book.id) AS likes
+  FROM book WHERE book.id = ?;

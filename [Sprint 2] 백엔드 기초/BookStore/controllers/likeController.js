@@ -1,4 +1,5 @@
-const conn = require("../db/connection");
+// 4월 15일 과제 - 류지민
+
 const { StatusCodes } = require("http-status-codes");
 const likeService = require("../services/likeService");
 
