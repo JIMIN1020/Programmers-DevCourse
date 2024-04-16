@@ -1,15 +1,11 @@
 const express = require("express");
 const router = express.Router();
+const cartController = require("../controllers/cartController");
 
 router.use(express.json());
 
-/* ----- 장바구니 담기 API ----- */
-router.post("/", (req, res) => {});
-
-/* ----- 장바구니 조회 API ----- */
-router.get("/", (req, res) => {});
-
-/* ----- 장바구니 삭제 API ----- */
-router.delete("/:id", (req, res) => {});
+router.post("/", cartController.addCartItem); // 장바구니 담기
+router.get("/", cartController.getCartItems); // 장바구니 도서 조회
+router.delete("/:id", cartController.deleteCartItem); // 장바구니 도서 삭제
 
 module.exports = router;

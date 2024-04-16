@@ -63,3 +63,8 @@ SELECT *,
   (SELECT EXISTS (SELECT * FROM likes WHERE userId = ? AND liked_bookId = book.id)) AS liked,
   (SELECT COUNT(*) FROM likes WHERE liked_bookId = book.id) AS likes
   FROM book WHERE book.id = ?;
+
+
+// 장바구니 담기
+INSERT INTO cartItems (bookId, quantity, userId) VALUES (1, 1, 1);
+
