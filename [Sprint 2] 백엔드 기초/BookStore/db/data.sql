@@ -68,3 +68,22 @@ SELECT *,
 // 장바구니 담기
 INSERT INTO cartItems (bookId, quantity, userId) VALUES (1, 1, 1);
 
+// 4월 17일 과제 - 류지민
+
+// 배송 정보 입력
+INSERT INTO delivery (address, receiver, contact) VALUES ("서울시 중구", "kim", "010-1234-1234");
+
+// 주문 정보 입력
+const delivery_id = SELECT MAX(id) FROM delivery;
+INSERT INTO orders (book_title, total_count, total_price, user_id, delivery_id) VALUES ("어린왕자들", 3, 60000, 1, delivery_id);
+
+// 주문 상세 목록 입력
+const order_id = SELECT MAX(id) FROM orders;
+INSERT INTO orderItems (order_id, book_id, quantity)
+VALUES (order_id, 1, 1);
+INSERT INTO orderItems (order_id, book_id, quantity)
+VALUES (order_id, 3, 2);
+
+// 방금 INSERT한 데이터의 PK값 가져오기
+SELECT MAX(id) FROM orderItems;
+SELECT LAST_INSERT_ID();

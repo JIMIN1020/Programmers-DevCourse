@@ -1,15 +1,13 @@
+// 4월 17일 과제 - 류지민
+
 const express = require("express");
 const router = express.Router();
+const orderController = require("../controllers/orderController");
 
 router.use(express.json());
 
-/* ----- 주문 API ----- */
-router.post("/", (req, res) => {});
-
-/* ----- 주문 목록 조회 API ----- */
-router.get("/", (req, res) => {});
-
-/* ----- 주문 상세 조회 API ----- */
-router.get("/:id", (req, res) => {});
+router.post("/", orderController.order); // 주문
+router.get("/", orderController.getOrderList); // 주문 목록 조회
+router.get("/:id", orderController.getOrderDetail); // 주문 상세 조회
 
 module.exports = router;
