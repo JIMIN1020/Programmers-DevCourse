@@ -27,27 +27,42 @@ const order = async (data) => {
     ]);
     const order_id = order_result[0].insertId; // 방금 insert한 주문 id
 
-    // // 주문 도서 목록 꺼내기
+    // 주문 도서 목록 SELECT
+    const item_result = await conn.query(orderQuery.getCartItems, [items]);
+    const itemInfo = item_result[0];
+
     let values = [];
-    items.forEach(async (item) => {
-      values.push([order_id, item.book_id, item.quantity]);
+    itemInfo.forEach(async (item) => {
+      values.push([order_id, item.bookId, item.quantity]);
     });
 
     // 주문 도서 목록 INSERT
     await conn.query(orderQuery.addOrderItems, [values]);
+
+    // 주문된 도서 -> 장바구니에서 DELETE
+    await conn.query(orderQuery.deleteOrderedItem, [items]);
 
     return {
       isSuccess: true,
       message: "주문 완료",
     };
   } catch (err) {
-    throw new CustomError(StatusCodes.BAD_REQUEST, err.message);
+    throw new CustomError(StatusCodes.INTERNAL_SERVER_ERROR, err.message);
   }
 };
 
 /* ----- 주문 목록 조회 API ----- */
-const getOrderList = () => {
-  //
+const getOrderList = async (userId) => {
+  try {
+    const result = await conn.query(orderQuery.getOrderList, userId);
+
+    return {
+      isSuccess: true,
+      result: result[0],
+    };
+  } catch (err) {
+    throw new CustomError(StatusCodes.INTERNAL_SERVER_ERROR, err.message);
+  }
 };
 /* ----- 주문 상세 조회 API ----- */
 const getOrderDetail = () => {

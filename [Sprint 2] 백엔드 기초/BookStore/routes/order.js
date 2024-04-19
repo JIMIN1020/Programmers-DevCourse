@@ -1,5 +1,3 @@
-// 4월 17일 과제 - 류지민
-
 const express = require("express");
 const router = express.Router();
 const orderController = require("../controllers/orderController");

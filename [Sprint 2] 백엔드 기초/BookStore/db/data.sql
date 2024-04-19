@@ -87,3 +87,6 @@ VALUES (order_id, 3, 2);
 // 방금 INSERT한 데이터의 PK값 가져오기
 SELECT MAX(id) FROM orderItems;
 SELECT LAST_INSERT_ID();
+
+// 결제된 도서 장바구니 삭제
+DELETE FROM cartItems WHERE id IN (1,2,3); 
