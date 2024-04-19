@@ -65,8 +65,17 @@ const getOrderList = async (userId) => {
   }
 };
 /* ----- 주문 상세 조회 API ----- */
-const getOrderDetail = () => {
-  //
+const getOrderDetail = async (orderId) => {
+  try {
+    const result = await conn.query(orderQuery.getOrderDetail, orderId);
+
+    return {
+      isSuccess: true,
+      result: result[0],
+    };
+  } catch (err) {
+    throw new CustomError(StatusCodes.INTERNAL_SERVER_ERROR, err.message);
+  }
 };
 
 module.exports = { order, getOrderList, getOrderDetail };

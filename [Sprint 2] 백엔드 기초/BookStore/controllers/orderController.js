@@ -28,8 +28,17 @@ const getOrderList = async (req, res) => {
   }
 };
 /* ----- 주문 상세 조회 API ----- */
-const getOrderDetail = (req, res) => {
-  //
+const getOrderDetail = async (req, res) => {
+  const { id } = req.params;
+  try {
+    const result = await orderService.getOrderDetail(id);
+    res.status(StatusCodes.OK).json(result);
+  } catch (err) {
+    res.status(err.statusCode || StatusCodes.INTERNAL_SERVER_ERROR).json({
+      isSuccess: false,
+      message: err.message,
+    });
+  }
 };
 
 module.exports = { order, getOrderList, getOrderDetail };
