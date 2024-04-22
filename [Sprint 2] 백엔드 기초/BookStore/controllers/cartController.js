@@ -1,13 +1,15 @@
 const { StatusCodes } = require("http-status-codes");
 const cartService = require("../services/cartService");
 const cartQuery = require("../queries/cartQuery");
+const verifyToken = require("../functions/verifyToken");
 
 /* ----- 장바구니 담기 API ----- */
 const addCartItem = async (req, res) => {
-  const { bookId, quantity, userId } = req.body;
-  let values = [bookId, quantity, userId];
-
   try {
+    const { bookId, quantity } = req.body;
+    const token = verifyToken(req);
+
+    let values = [bookId, quantity, token.id];
     const result = await cartService.addCartItem(values);
     res.status(StatusCodes.CREATED).json(result);
   } catch (err) {
@@ -20,8 +22,10 @@ const addCartItem = async (req, res) => {
 
 /* ----- 장바구니 도서 조회 API ----- */
 const getCartItems = async (req, res) => {
-  const { userId, selectedItems } = req.body;
   try {
+    const { selectedItems } = req.body;
+    const token = verifyToken(req);
+
     let sql = cartQuery.getCartItems;
     // 선택 조회
     if (selectedItems) {
@@ -32,7 +36,7 @@ const getCartItems = async (req, res) => {
     }
     // 전체 조회
     else {
-      const result = await cartService.getCartItems(sql, userId);
+      const result = await cartService.getCartItems(sql, token.id);
       res.status(StatusCodes.OK).json(result);
     }
   } catch (err) {
@@ -45,10 +49,10 @@ const getCartItems = async (req, res) => {
 
 /* ----- 장바구니 도서 삭제 API ----- */
 const deleteCartItem = async (req, res) => {
-  const { id } = req.params;
+  const cartItemId = req.params.id;
 
   try {
-    const result = await cartService.deleteCartItem(id);
+    const result = await cartService.deleteCartItem(cartItemId);
     res.status(StatusCodes.OK).json(result);
   } catch (err) {
     res.status(err.StatusCodes || StatusCodes.INTERNAL_SERVER_ERROR).json({
