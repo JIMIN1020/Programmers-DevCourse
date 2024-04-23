@@ -4,9 +4,8 @@ const orderQuery = require("../queries/orderQuery");
 const { StatusCodes } = require("http-status-codes");
 
 /* ----- 주문 API ----- */
-const order = async (data) => {
-  const { items, book_title, delivery, total_count, total_price, user_id } =
-    data;
+const order = async (data, user_id) => {
+  const { items, book_title, delivery, total_count, total_price } = data;
 
   try {
     // 배송 정보 INSERT

@@ -1,10 +1,12 @@
 const orderService = require("../services/orderService");
 const { StatusCodes } = require("http-status-codes");
+const verifyToken = require("../functions/verifyToken");
 
 /* ----- 주문 API ----- */
 const order = async (req, res) => {
   try {
-    const result = await orderService.order(req.body);
+    const token = verifyToken(req);
+    const result = await orderService.order(req.body, token.id);
     res.status(StatusCodes.CREATED).json(result);
   } catch (err) {
     res.status(err.statusCode || StatusCodes.INTERNAL_SERVER_ERROR).json({
@@ -16,9 +18,9 @@ const order = async (req, res) => {
 
 /* ----- 주문 목록 조회 API ----- */
 const getOrderList = async (req, res) => {
-  const { userId } = req.body;
   try {
-    const result = await orderService.getOrderList(userId);
+    const token = verifyToken(req);
+    const result = await orderService.getOrderList(token.id);
     res.status(StatusCodes.OK).json(result);
   } catch (err) {
     res.status(err.statusCode || StatusCodes.INTERNAL_SERVER_ERROR).json({
@@ -29,9 +31,9 @@ const getOrderList = async (req, res) => {
 };
 /* ----- 주문 상세 조회 API ----- */
 const getOrderDetail = async (req, res) => {
-  const { id } = req.params;
+  const orderId = req.params.id;
   try {
-    const result = await orderService.getOrderDetail(id);
+    const result = await orderService.getOrderDetail(orderId);
     res.status(StatusCodes.OK).json(result);
   } catch (err) {
     res.status(err.statusCode || StatusCodes.INTERNAL_SERVER_ERROR).json({

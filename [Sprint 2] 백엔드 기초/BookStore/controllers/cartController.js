@@ -30,7 +30,7 @@ const getCartItems = async (req, res) => {
     // 선택 조회
     if (selectedItems) {
       sql += cartQuery.getSelecItems;
-      let values = [userId, selectedItems];
+      let values = [token.id, selectedItems];
       const result = await cartService.getCartItems(sql, values);
       res.status(StatusCodes.OK).json(result);
     }
@@ -52,6 +52,7 @@ const deleteCartItem = async (req, res) => {
   const cartItemId = req.params.id;
 
   try {
+    verifyToken(req);
     const result = await cartService.deleteCartItem(cartItemId);
     res.status(StatusCodes.OK).json(result);
   } catch (err) {

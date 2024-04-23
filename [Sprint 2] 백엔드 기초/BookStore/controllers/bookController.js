@@ -4,6 +4,7 @@ const bookService = require("../services/bookService");
 const bookQuery = require("../queries/bookQuery");
 const { StatusCodes } = require("http-status-codes");
 const CustomError = require("../CustomError");
+const verifyToken = require("../functions/verifyToken");
 
 /* ----- 도서 목록 조회 ----- */
 const getAllBooks = async (req, res) => {
@@ -34,7 +35,7 @@ const getAllBooks = async (req, res) => {
       sql += ` LIMIT ${+limit} OFFSET ${(page - 1) * limit}`;
     }
 
-    const result = await bookService.getAllBooks(sql, values);
+    const result = await bookService.getAllBooks(sql, values, page);
     res.status(StatusCodes.OK).json(result);
   } catch (err) {
     res.status(err.statusCode || StatusCodes.INTERNAL_SERVER_ERROR).json({
@@ -46,11 +47,26 @@ const getAllBooks = async (req, res) => {
 
 /* ----- 도서 상세 조회 ----- */
 const getBookDetail = async (req, res) => {
+  const bookId = +req.params.id;
   try {
-    const { userId } = req.body;
-    const values = [userId, +req.params.id];
-    const result = await bookService.getBookDetail(values);
-    res.status(StatusCodes.OK).json(result);
+    // 로그인 상태이면 -> 좋아요 여부 포함
+    if (req.headers["authorization"]) {
+      const token = verifyToken(req);
+      const values = [token.id, bookId];
+      const result = await bookService.getBookDetail(
+        bookQuery.getBookDetail,
+        values
+      );
+      res.status(StatusCodes.OK).json(result);
+    }
+    // 로그인 상태가 아니면 좋아요 여부 미포함
+    else {
+      const result = await bookService.getBookDetail(
+        bookQuery.getBookDetailNotLogin,
+        bookId
+      );
+      res.status(StatusCodes.OK).json(result);
+    }
   } catch (err) {
     res.status(err.statusCode || StatusCodes.INTERNAL_SERVER_ERROR).json({
       isSuccess: false,
