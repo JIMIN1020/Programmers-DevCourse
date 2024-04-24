@@ -1,6 +1,7 @@
 const orderService = require("../services/orderService");
 const { StatusCodes } = require("http-status-codes");
 const verifyToken = require("../functions/verifyToken");
+const valid = require("../functions/validationCheck");
 
 /* ----- 주문 API ----- */
 const order = async (req, res) => {
@@ -30,17 +31,21 @@ const getOrderList = async (req, res) => {
   }
 };
 /* ----- 주문 상세 조회 API ----- */
-const getOrderDetail = async (req, res) => {
-  const orderId = req.params.id;
-  try {
-    const result = await orderService.getOrderDetail(orderId);
-    res.status(StatusCodes.OK).json(result);
-  } catch (err) {
-    res.status(err.statusCode || StatusCodes.INTERNAL_SERVER_ERROR).json({
-      isSuccess: false,
-      message: err.message,
-    });
-  }
-};
+const getOrderDetail = [
+  valid.orderIdValidation(),
+  valid.validationCheck,
+  async (req, res) => {
+    const { orderId } = req.params;
+    try {
+      const result = await orderService.getOrderDetail(orderId);
+      res.status(StatusCodes.OK).json(result);
+    } catch (err) {
+      res.status(err.statusCode || StatusCodes.INTERNAL_SERVER_ERROR).json({
+        isSuccess: false,
+        message: err.message,
+      });
+    }
+  },
+];
 
 module.exports = { order, getOrderList, getOrderDetail };
