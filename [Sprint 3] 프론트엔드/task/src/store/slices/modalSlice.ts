@@ -1,10 +1,10 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { Task } from "../../types";
+import { ITask } from "../../types";
 
 interface ModalState {
   boardId: string;
   listId: string;
-  task: Task;
+  task: ITask;
 }
 
 const initialState: ModalState = {

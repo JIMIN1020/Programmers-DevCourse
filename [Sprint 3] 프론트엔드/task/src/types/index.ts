@@ -1,25 +1,25 @@
-export interface Task {
+export interface ITask {
   taskId: string;
   taskName: string;
   taskDescription: string;
   taskOwner: string;
 }
 
-export interface LogItem {
+export interface ILogItem {
   logId: string;
   logAuthor: string;
   logMessage: string;
   logTimestamp: string;
 }
 
-export interface Board {
+export interface IBoard {
   boardId: string;
   boardName: string;
-  lists: List[];
+  lists: IList[];
 }
 
-export interface List {
+export interface IList {
   listId: string;
   listName: string;
-  tasks: Task[];
+  tasks: ITask[];
 }
