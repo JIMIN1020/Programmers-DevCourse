@@ -59,7 +59,7 @@ function List({ list, boardId }: Props) {
           />
         </div>
       ))}
-      <ActionButton />
+      <ActionButton boardId={boardId} listId={list.listId} />
     </div>
   );
 }
