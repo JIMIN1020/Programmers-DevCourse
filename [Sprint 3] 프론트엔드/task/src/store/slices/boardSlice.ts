@@ -26,6 +26,10 @@ interface DeleteListAction {
   listId: string;
 }
 
+interface DeleteBoardAction {
+  boardId: string;
+}
+
 interface DeleteTaskAction {
   boardId: string;
   listId: string;
@@ -160,6 +164,11 @@ const boardSlice = createSlice({
           : board
       );
     },
+    deleteBoard: (state, { payload }: PayloadAction<DeleteBoardAction>) => {
+      state.boardArray = state.boardArray.filter(
+        (board) => board.boardId !== payload.boardId
+      );
+    },
     setModalActive: (state, { payload }: PayloadAction<boolean>) => {
       state.modalActive = payload;
     },
@@ -174,5 +183,6 @@ export const {
   addTask,
   updateTask,
   deleteTask,
+  deleteBoard,
 } = boardSlice.actions;
 export const boardReducer = boardSlice.reducer;
