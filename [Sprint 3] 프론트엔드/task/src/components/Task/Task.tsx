@@ -1,3 +1,4 @@
+import { Draggable } from "react-beautiful-dnd";
 import { container, description, title } from "./Task.css";
 
 interface Props {
@@ -10,10 +11,19 @@ interface Props {
 
 function Task({ taskName, taskDesc, index, id, boardId }: Props) {
   return (
-    <div className={container}>
-      <div className={title}>{taskName}</div>
-      <div className={description}>{taskDesc}</div>
-    </div>
+    <Draggable draggableId={id} index={index}>
+      {(provided) => (
+        <div
+          ref={provided.innerRef}
+          {...provided.draggableProps}
+          {...provided.dragHandleProps}
+          className={container}
+        >
+          <div className={title}>{taskName}</div>
+          <div className={description}>{taskDesc}</div>
+        </div>
+      )}
+    </Draggable>
   );
 }
 
