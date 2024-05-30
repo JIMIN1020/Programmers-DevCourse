@@ -2,6 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import { FaSignInAlt, FaRegUser } from "react-icons/fa";
 import { Link } from "react-router-dom";
+import { useCategory } from "../../hooks/useCategory";
 
 const CATEGORY = [
   { id: null, name: "전체" },
@@ -11,10 +12,13 @@ const CATEGORY = [
 ];
 
 function Header() {
+  const { category } = useCategory();
+  console.log(category);
+
   return (
     <HeaderBar>
       <Logo to="/">Book Store</Logo>
-      <Category className="category">
+      <CategoryNav className="category">
         <ul>
           {CATEGORY.map((item) => (
             <li key={item.id}>
@@ -28,7 +32,7 @@ function Header() {
             </li>
           ))}
         </ul>
-      </Category>
+      </CategoryNav>
       <Auth>
         <ul>
           <li>
@@ -63,7 +67,7 @@ const HeaderBar = styled.header`
   border-bottom: 1px solid ${({ theme }) => theme.color.background};
 `;
 
-const Category = styled.nav`
+const CategoryNav = styled.nav`
   ul {
     display: flex;
     gap: 32px;
