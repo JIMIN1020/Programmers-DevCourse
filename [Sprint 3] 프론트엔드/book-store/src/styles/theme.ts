@@ -9,6 +9,7 @@ export type ColorKey =
 export type HeadingSize = "lg" | "md" | "sm";
 export type ButtonSize = "lg" | "md" | "sm";
 export type ButtonScheme = "primary" | "normal";
+export type LayoutWidth = "lg" | "md" | "sm";
 
 interface Theme {
   name: ThemeName;
@@ -33,14 +34,19 @@ interface Theme {
   borderRadius: {
     default: string;
   };
+  layout: {
+    width: {
+      [key in LayoutWidth]: string;
+    };
+  };
 }
 
 export const light: Theme = {
   name: "light",
   color: {
-    primary: "brown",
+    primary: "#ff5800",
     background: "lightgray",
-    secondary: "blue",
+    secondary: "#5F5F5F",
     third: "green",
     border: "gray",
     text: "black",
@@ -82,6 +88,13 @@ export const light: Theme = {
   },
   borderRadius: {
     default: "4px",
+  },
+  layout: {
+    width: {
+      lg: "1020px",
+      md: "760px",
+      sm: "320px",
+    },
   },
 } as const;
 
