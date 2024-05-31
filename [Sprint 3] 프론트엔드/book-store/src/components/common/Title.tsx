@@ -19,7 +19,7 @@ function Title({ children, size, color }: Props) {
 export default Title;
 
 const StyledTitle = styled.h1<Omit<Props, "children">>`
-  font-size: ${({ theme, size }) => theme.heading[size]};
+  font-size: ${({ theme, size }) => theme.heading[size].fontSize};
   color: ${({ theme, color }) =>
     color ? theme.color[color] : theme.color.primary};
 `;

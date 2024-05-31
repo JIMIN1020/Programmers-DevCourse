@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import { FaSignInAlt, FaRegUser } from "react-icons/fa";
 import { Link } from "react-router-dom";
-import { useCategory } from "../../hooks/useCategory";
+// import { useCategory } from "../../hooks/useCategory";
 
 const CATEGORY = [
   { id: null, name: "전체" },
@@ -12,8 +12,8 @@ const CATEGORY = [
 ];
 
 function Header() {
-  const { category } = useCategory();
-  console.log(category);
+  // const { category } = useCategory();
+  // console.log(category);
 
   return (
     <HeaderBar>
@@ -42,7 +42,7 @@ function Header() {
             </Link>
           </li>
           <li>
-            <Link to="/join">
+            <Link to="/signup">
               <FaRegUser />
               회원가입
             </Link>
