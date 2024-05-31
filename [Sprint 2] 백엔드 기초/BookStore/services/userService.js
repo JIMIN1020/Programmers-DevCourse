@@ -1,5 +1,3 @@
-// 4월 10일 과제 제출 - 류지민
-
 const conn = require("../db/connection");
 const userQuery = require("../queries/userQuery");
 const CustomError = require("../CustomError");
@@ -55,7 +53,7 @@ const login = async (email, password) => {
           id: userData.id,
         },
         process.env.PRIVATE_KEY,
-        { expiresIn: "5m", issuer: "jm" }
+        { expiresIn: "14d", issuer: "jm" }
       );
 
       return {

@@ -2,10 +2,12 @@
 
 const express = require("express");
 const app = express();
+const cors = require("cors");
 require("dotenv").config();
 
-const PORT = process.env.PORT;
+const PORT = 9999;
 
+app.use(cors());
 app.listen(PORT, () => console.log(`Server listening on ${PORT}...`));
 
 // router

@@ -2,25 +2,20 @@ import React from "react";
 import styled from "styled-components";
 import { FaSignInAlt, FaRegUser } from "react-icons/fa";
 import { Link } from "react-router-dom";
-// import { useCategory } from "../../hooks/useCategory";
-
-const CATEGORY = [
-  { id: null, name: "전체" },
-  { id: 0, name: "동화" },
-  { id: 1, name: "소설" },
-  { id: 2, name: "사회" },
-];
+import { useCategory } from "../../hooks/useCategory";
+import { Category } from "../../models/category.model";
+import { useAuthStore } from "../../store/authStore";
 
 function Header() {
-  // const { category } = useCategory();
-  // console.log(category);
+  const category = useCategory();
+  const { isLoggedIn, storeLogout } = useAuthStore();
 
   return (
     <HeaderBar>
       <Logo to="/">Book Store</Logo>
       <CategoryNav className="category">
         <ul>
-          {CATEGORY.map((item) => (
+          {category.map((item: Category) => (
             <li key={item.id}>
               <Link
                 to={
@@ -33,21 +28,42 @@ function Header() {
           ))}
         </ul>
       </CategoryNav>
+
       <Auth>
-        <ul>
-          <li>
-            <Link to="/login">
-              <FaSignInAlt />
-              로그인
-            </Link>
-          </li>
-          <li>
-            <Link to="/signup">
-              <FaRegUser />
-              회원가입
-            </Link>
-          </li>
-        </ul>
+        {isLoggedIn ? (
+          <ul>
+            <li>
+              <Link to="/cart">
+                <FaSignInAlt />
+                장바구니
+              </Link>
+            </li>
+            <li>
+              <Link to="/orderlist">
+                <FaSignInAlt />
+                주문 내역
+              </Link>
+            </li>
+            <li>
+              <button onClick={storeLogout}>로그아웃</button>
+            </li>
+          </ul>
+        ) : (
+          <ul>
+            <li>
+              <Link to="/login">
+                <FaSignInAlt />
+                로그인
+              </Link>
+            </li>
+            <li>
+              <Link to="/signup">
+                <FaRegUser />
+                회원가입
+              </Link>
+            </li>
+          </ul>
+        )}
       </Auth>
     </HeaderBar>
   );
@@ -94,15 +110,20 @@ const Auth = styled.nav`
   ul {
     display: flex;
     gap: 16px;
+
     li {
-      a {
-        font-size: 1.5rem;
+      a,
+      button {
+        font-size: 1rem;
         font-weight: 600;
         text-decoration: none;
         display: flex;
         align-items: center;
         line-height: 1;
         gap: 10px;
+        background: none;
+        border: none;
+        cursor: pointer;
       }
     }
   }

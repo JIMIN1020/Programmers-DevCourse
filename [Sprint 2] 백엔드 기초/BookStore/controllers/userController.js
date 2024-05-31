@@ -33,14 +33,9 @@ const login = [
       // service 호출
       const { email, password } = req.body;
       const result = await userService.login(email, password);
-      const { token, isSuccess, message } = result;
 
-      // token 쿠키로 전달
-      res.cookie("token", token, {
-        httpOnly: true,
-      });
       // 응답
-      res.status(StatusCodes.OK).json({ isSuccess, message });
+      res.status(StatusCodes.OK).json(result);
     } catch (err) {
       res.status(err.statusCode || StatusCodes.INTERNAL_SERVER_ERROR).json({
         isSuccess: false,

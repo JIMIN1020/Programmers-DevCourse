@@ -10,7 +10,7 @@ export const useCategory = () => {
       if (!category) {
         return;
       }
-      const categoryAll = [{ id: null, name: "전체" }, ...category];
+      const categoryAll = [{ id: null, name: "전체" }, ...category.result];
       setCategory(categoryAll);
     });
   }, []);
