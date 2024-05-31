@@ -1,5 +1,6 @@
 export const QUERYSTRING = {
-  CATEGORY_ID: "category_id",
-  IS_NEW: "isNew",
+  CATEGORY_ID: "categoryId",
+  NEWLY: "newly",
   PAGE: "page",
+  VIEW: "view",
 };

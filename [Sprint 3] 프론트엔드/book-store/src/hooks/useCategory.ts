@@ -16,7 +16,8 @@ export const useCategory = () => {
         return prev.map((item) => {
           return {
             ...item,
-            isActive: item.id === Number(params.get(QUERYSTRING.CATEGORY_ID)),
+            isActive:
+              item.category_id === Number(params.get(QUERYSTRING.CATEGORY_ID)),
           };
         });
       });
@@ -37,7 +38,10 @@ export const useCategory = () => {
       if (!category) {
         return;
       }
-      const categoryAll = [{ id: null, name: "전체" }, ...category.result];
+      const categoryAll = [
+        { category_id: null, category_name: "전체" },
+        ...category.result,
+      ];
       setCategory(categoryAll);
       setActive();
     });

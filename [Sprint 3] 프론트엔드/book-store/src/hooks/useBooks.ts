@@ -17,15 +17,14 @@ export const useBooks = () => {
 
   useEffect(() => {
     const params = new URLSearchParams(location.search);
+    console.log(params.get(QUERYSTRING.CATEGORY_ID));
 
     fetchBooks({
-      cateogry_id: params.get(QUERYSTRING.CATEGORY_ID)
+      categoryId: params.get(QUERYSTRING.CATEGORY_ID)
         ? +params.get(QUERYSTRING.CATEGORY_ID)!
         : undefined,
-      isNew: params.get(QUERYSTRING.IS_NEW) ? true : undefined,
-      currentPage: params.get(QUERYSTRING.PAGE)
-        ? +params.get(QUERYSTRING.PAGE)!
-        : 1,
+      newly: params.get(QUERYSTRING.NEWLY) ? true : undefined,
+      page: params.get(QUERYSTRING.PAGE) ? +params.get(QUERYSTRING.PAGE)! : 1,
       limit: LIMIT,
     }).then(({ result: { books, pagination } }) => {
       setBooks(books);

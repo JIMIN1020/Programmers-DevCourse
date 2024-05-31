@@ -7,15 +7,16 @@ import { FaHeart } from "react-icons/fa";
 
 interface Props {
   bookData: Book;
+  view?: string;
 }
 
-function BookItem({ bookData }: Props) {
+function BookItem({ bookData, view }: Props) {
   return (
-    <BookItemStyle>
-      <BookImg>
+    <BookItemStyle view={view}>
+      <BookImg view={view}>
         <img src={getImgSrc(bookData.id)} alt={bookData.title} />
       </BookImg>
-      <Content>
+      <Content view={view}>
         <h2>{bookData.title}</h2>
         <p className="summary">{bookData.summary}</p>
         <p className="author">{bookData.author}</p>
@@ -31,24 +32,26 @@ function BookItem({ bookData }: Props) {
 
 export default BookItem;
 
-const BookItemStyle = styled.div`
+const BookItemStyle = styled.div<Pick<Props, "view">>`
   display: flex;
-  flex-direction: column;
+  flex-direction: ${({ view }) => (view === "grid" ? "column" : "row")};
   box-shadow: 0 0 4px rgba(0, 0, 0, 0.2);
 `;
 
-const BookImg = styled.div`
+const BookImg = styled.div<Pick<Props, "view">>`
   border-radius: ${({ theme }) => theme.borderRadius.default};
   overflow: hidden;
+  width: ${({ view }) => (view === "grid" ? "auto" : "160px")};
 
   img {
     max-width: 100%;
   }
 `;
 
-const Content = styled.div`
+const Content = styled.div<Pick<Props, "view">>`
   padding: 16px;
   position: relative;
+  flex: ${({ view }) => (view === "grid" ? 1 : 0)};
 
   h2 {
     font-size: 1.25rem;

@@ -1,15 +1,15 @@
 import { httpClient } from "./http";
 
 interface FetchBooksParams {
-  cateogry_id?: number;
-  isNew?: boolean;
-  currentPage?: number;
+  categoryId?: number;
+  newly?: boolean;
+  page?: number;
   limit?: number;
 }
 
 export const fetchBooks = async (params: FetchBooksParams) => {
   try {
-    const response = await httpClient.get(`/books`, {
+    const response = await httpClient.get(`/book`, {
       params: params,
     });
 

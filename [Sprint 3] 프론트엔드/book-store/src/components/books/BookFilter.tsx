@@ -24,10 +24,10 @@ function BookFilter() {
   const handleNew = () => {
     const newParams = new URLSearchParams(params);
 
-    if (newParams.get(QUERYSTRING.IS_NEW)) {
-      newParams.delete(QUERYSTRING.IS_NEW);
+    if (newParams.get(QUERYSTRING.NEWLY)) {
+      newParams.delete(QUERYSTRING.NEWLY);
     } else {
-      newParams.set(QUERYSTRING.IS_NEW, "true");
+      newParams.set(QUERYSTRING.NEWLY, "true");
     }
 
     setParams(newParams);
@@ -40,16 +40,16 @@ function BookFilter() {
           <Button
             size="md"
             scheme={data.isActive ? "primary" : "normal"}
-            key={data.id}
-            onClick={() => handleCategory(data.id)}
+            key={data.category_id}
+            onClick={() => handleCategory(data.category_id)}
           >
-            {data.name}
+            {data.category_name}
           </Button>
         ))}
       </Category>
       <Button
         size="md"
-        scheme={params.get(QUERYSTRING.IS_NEW) ? "primary" : "normal"}
+        scheme={params.get(QUERYSTRING.NEWLY) ? "primary" : "normal"}
         onClick={() => handleNew()}
       >
         신간

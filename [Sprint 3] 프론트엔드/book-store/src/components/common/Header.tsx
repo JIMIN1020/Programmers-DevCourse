@@ -16,13 +16,15 @@ function Header() {
       <CategoryNav className="category">
         <ul>
           {category.map((item: Category) => (
-            <li key={item.id}>
+            <li key={item.category_id}>
               <Link
                 to={
-                  item.id === null ? "/books" : `/books?category_id=${item.id}`
+                  item.category_id === null
+                    ? "/books"
+                    : `/books?categoryId=${item.category_id}`
                 }
               >
-                {item.name}
+                {item.category_name}
               </Link>
             </li>
           ))}
