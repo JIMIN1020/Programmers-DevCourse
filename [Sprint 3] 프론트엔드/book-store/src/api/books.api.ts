@@ -27,3 +27,33 @@ export const fetchBooks = async (params: FetchBooksParams) => {
     };
   }
 };
+
+export const fetchBook = async (bookId: string) => {
+  try {
+    const response = await httpClient.get(`/book/${bookId}`);
+    return response.data.result;
+  } catch (err) {
+    return {
+      isSuccess: false,
+      result: {},
+    };
+  }
+};
+
+export const likeBook = async (bookId: number) => {
+  try {
+    const response = await httpClient.post(`/like/${bookId}`);
+    return response.data;
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+export const cancelLikeBook = async (bookId: number) => {
+  try {
+    const response = await httpClient.delete(`/like/${bookId}`);
+    return response.data;
+  } catch (err) {
+    console.log(err);
+  }
+};

@@ -4,6 +4,7 @@ import styled from "styled-components";
 import { getImgSrc } from "../../utils/image";
 import { formatNumber } from "../../utils/format";
 import { FaHeart } from "react-icons/fa";
+import { Link } from "react-router-dom";
 
 interface Props {
   bookData: Book;
@@ -13,19 +14,21 @@ interface Props {
 function BookItem({ bookData, view }: Props) {
   return (
     <BookItemStyle view={view}>
-      <BookImg view={view}>
-        <img src={getImgSrc(bookData.id)} alt={bookData.title} />
-      </BookImg>
-      <Content view={view}>
-        <h2>{bookData.title}</h2>
-        <p className="summary">{bookData.summary}</p>
-        <p className="author">{bookData.author}</p>
-        <p className="price">{formatNumber(bookData.price)}원</p>
-        <Likes>
-          <FaHeart />
-          {bookData.likes}
-        </Likes>
-      </Content>
+      <Link to={`/book/${bookData.id}`}>
+        <BookImg view={view}>
+          <img src={getImgSrc(bookData.id)} alt={bookData.title} />
+        </BookImg>
+        <Content view={view}>
+          <h2>{bookData.title}</h2>
+          <p className="summary">{bookData.summary}</p>
+          <p className="author">{bookData.author}</p>
+          <p className="price">{formatNumber(bookData.price)}원</p>
+          <Likes>
+            <FaHeart />
+            {bookData.likes}
+          </Likes>
+        </Content>
+      </Link>
     </BookItemStyle>
   );
 }
@@ -33,9 +36,12 @@ function BookItem({ bookData, view }: Props) {
 export default BookItem;
 
 const BookItemStyle = styled.div<Pick<Props, "view">>`
-  display: flex;
-  flex-direction: ${({ view }) => (view === "grid" ? "column" : "row")};
-  box-shadow: 0 0 4px rgba(0, 0, 0, 0.2);
+  a {
+    display: flex;
+    flex-direction: ${({ view }) => (view === "grid" ? "column" : "row")};
+    box-shadow: 0 0 4px rgba(0, 0, 0, 0.2);
+    text-decoration: none;
+  }
 `;
 
 const BookImg = styled.div<Pick<Props, "view">>`

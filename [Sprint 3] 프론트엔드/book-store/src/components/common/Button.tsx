@@ -44,4 +44,8 @@ const ButtonStyle = styled.button<Omit<Props, "children">>`
   opacity: ${({ disabled }) => (disabled ? 0.5 : 1)};
   cursor: ${({ disabled }) => (disabled ? "none" : "pointer")};
   pointer-events: ${({ disabled }) => (disabled ? "none" : "auto")};
+
+  display: flex;
+  align-items: center;
+  gap: 6px;
 `;

@@ -6,16 +6,16 @@ export interface Book {
   summary: string;
   price: number;
   likes: number;
-  publish_date: string;
+  published_date: string;
   category_name: string;
 }
 
 export interface BookDetail extends Book {
-  category: string;
+  category_id: string;
   format: string;
-  ISBN: string;
+  isbn: string;
   pages: number;
-  description: string;
-  index: string;
-  liked: string;
+  detail: string;
+  contents: string;
+  liked: boolean;
 }
