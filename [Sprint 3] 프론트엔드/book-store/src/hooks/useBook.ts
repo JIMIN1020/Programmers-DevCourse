@@ -9,7 +9,7 @@ export const useBook = (bookId: string | undefined) => {
   const [book, setBook] = useState<BookDetail | null>(null);
   const [cartAdded, setCartAdded] = useState<boolean>(false);
   const { isLoggedIn } = useAuthStore();
-  const showAlert = useAlert();
+  const { showAlert } = useAlert();
 
   useEffect(() => {
     if (!bookId) return;

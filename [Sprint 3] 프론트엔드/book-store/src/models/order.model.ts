@@ -1,5 +1,5 @@
 export interface Order {
-  created_at: string;
+  items: number[];
   delivery: {
     address: string;
     receiver: string;
@@ -8,4 +8,13 @@ export interface Order {
   book_title: string;
   total_count: number;
   total_price: number;
+}
+
+export interface OrderItem {
+  bookId: string;
+  img: string;
+  title: string;
+  author: string;
+  price: number;
+  count: number;
 }

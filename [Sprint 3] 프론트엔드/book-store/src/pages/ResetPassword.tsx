@@ -20,7 +20,7 @@ function ResetPassword() {
     formState: { errors },
   } = useForm<ResetPasswordProps>();
   const navigate = useNavigate();
-  const showAlert = useAlert();
+  const { showAlert } = useAlert();
   const [resetRequested, setResetRequested] = useState<boolean>(false);
 
   const onSubmit = (data: ResetPasswordProps) => {

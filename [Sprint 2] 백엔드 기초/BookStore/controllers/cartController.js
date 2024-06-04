@@ -28,8 +28,6 @@ const addCartItem = [
 
 /* ----- 장바구니 도서 조회 API ----- */
 const getCartItems = [
-  valid.selectedItemsValidation(),
-  valid.validationCheck,
   async (req, res) => {
     try {
       const { selectedItems } = req.body;

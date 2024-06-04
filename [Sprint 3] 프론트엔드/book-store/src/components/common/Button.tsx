@@ -47,5 +47,6 @@ const ButtonStyle = styled.button<Omit<Props, "children">>`
 
   display: flex;
   align-items: center;
+  justify-content: center;
   gap: 6px;
 `;

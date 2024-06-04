@@ -1,27 +1,30 @@
 import React from "react";
-import { FaSmileWink } from "react-icons/fa";
+
 import styled from "styled-components";
 import Title from "../common/Title";
-import { Link } from "react-router-dom";
 
-function BookEmpty() {
+interface Props {
+  icon?: React.ReactNode;
+  title: string;
+  description: React.ReactNode;
+}
+
+function Empty({ icon, title, description }: Props) {
   return (
-    <BookEmptyStyle>
-      <Icon>
-        <FaSmileWink />
-      </Icon>
+    <EmptyStyle>
+      {icon && <Icon>{icon}</Icon>}
       <Title size="lg" color="secondary">
-        검색 결과가 없습니다.
+        {title}
       </Title>
-
-      <Link to="/books">전체 검색 결과로 이동</Link>
-    </BookEmptyStyle>
+      {description && <p>{description}</p>}
+    </EmptyStyle>
   );
 }
 
-export default BookEmpty;
+export default Empty;
 
-const BookEmptyStyle = styled.div`
+const EmptyStyle = styled.div`
+  width: 100%;
   display: flex;
   flex-direction: column;
   justify-content: center;

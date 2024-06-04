@@ -20,7 +20,7 @@ function Signup() {
     formState: { errors },
   } = useForm<SignUpProps>();
   const navigate = useNavigate();
-  const showAlert = useAlert();
+  const { showAlert } = useAlert();
 
   const onSubmit = (data: SignUpProps) => {
     signup(data).then((res) => {

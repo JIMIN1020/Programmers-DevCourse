@@ -3,10 +3,12 @@ import styled from "styled-components";
 import Title from "../components/common/Title";
 import BookFilter from "../components/books/BookFilter";
 import BookList from "../components/books/BookList";
-import BookEmpty from "../components/books/BookEmpty";
+import { FaSmileWink } from "react-icons/fa";
 import Pagination from "../components/books/Pagination";
 import BookViewSwitcher from "../components/books/BookViewSwitcher";
 import { useBooks } from "../hooks/useBooks";
+import Empty from "../components/common/Empty";
+import { Link } from "react-router-dom";
 
 function Books() {
   const { books, isEmpty, pagination } = useBooks();
@@ -18,7 +20,15 @@ function Books() {
           <BookFilter />
           <BookViewSwitcher />
         </Wrapper>
-        {isEmpty ? <BookEmpty /> : <BookList books={books} />}
+        {isEmpty ? (
+          <Empty
+            icon={<FaSmileWink />}
+            title="검색 결과가 없습니다."
+            description={<Link to="/books">전체 검색 결과로 이동</Link>}
+          />
+        ) : (
+          <BookList books={books} />
+        )}
         <Pagination pagination={pagination} />
       </BooksStyle>
     </>
