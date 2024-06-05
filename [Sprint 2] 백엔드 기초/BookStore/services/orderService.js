@@ -32,7 +32,7 @@ const order = async (data, user_id) => {
 
     let values = [];
     itemInfo.forEach(async (item) => {
-      values.push([order_id, item.bookId, item.quantity]);
+      values.push([order_id, item.book_id, item.quantity]);
     });
 
     // 주문 도서 목록 INSERT

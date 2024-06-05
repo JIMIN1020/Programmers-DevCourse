@@ -8,7 +8,7 @@ import { FaShoppingCart } from "react-icons/fa";
 import CartSummary from "../components/cart/CartSummary";
 import Button from "../components/common/Button";
 import { useAlert } from "../hooks/useAlert";
-import { Order } from "../models/order.model";
+import { OrderType } from "../models/order.model";
 import { useNavigate } from "react-router-dom";
 
 function Cart() {
@@ -49,7 +49,7 @@ function Cart() {
       return;
     }
 
-    const orderData: Omit<Order, "delivery"> = {
+    const orderData: Omit<OrderType, "delivery"> = {
       items: checkedItem,
       total_count: totalCount,
       total_price: totalPrice,
@@ -100,7 +100,7 @@ function Cart() {
 
 export default Cart;
 
-const CartStyle = styled.div`
+export const CartStyle = styled.div`
   display: flex;
   gap: 24px;
   justify-content: space-between;

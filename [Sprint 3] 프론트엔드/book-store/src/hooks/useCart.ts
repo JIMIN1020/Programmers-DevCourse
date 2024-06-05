@@ -14,8 +14,13 @@ export const useCart = () => {
 
   useEffect(() => {
     fetchCart().then((res) => {
-      setCart(res.result);
-      setIsEmpty(res.result.length === 0);
+      if (res.isSuccess) {
+        setCart(res.result);
+        setIsEmpty(false);
+      } else {
+        setCart([]);
+        setIsEmpty(true);
+      }
     });
   }, []);
 
