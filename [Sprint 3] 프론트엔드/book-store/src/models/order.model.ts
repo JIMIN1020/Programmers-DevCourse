@@ -12,11 +12,26 @@ export interface OrderType {
   total_price: number;
 }
 
+export interface Order {
+  created_at: string;
+  order_id: number;
+  items: number[];
+  address: string;
+  receiver: string;
+  contact: string;
+  book_title: string;
+  total_count: number;
+  total_price: number;
+}
+
 export interface OrderItem {
-  bookId: string;
-  img: string;
+  book_id: number;
   title: string;
   author: string;
-  price: number;
-  count: number;
+  price: string;
+  quantity: string;
+}
+
+export interface OrderListItem extends Order {
+  detail?: OrderItem[];
 }

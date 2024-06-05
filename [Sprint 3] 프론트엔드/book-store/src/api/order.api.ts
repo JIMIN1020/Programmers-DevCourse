@@ -9,3 +9,21 @@ export const order = async (orderData: OrderType) => {
     console.log(err);
   }
 };
+
+export const fetchOrders = async () => {
+  try {
+    const response = await httpClient.get("/order");
+    return response.data;
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+export const fetchOrderDetail = async (id: number) => {
+  try {
+    const response = await httpClient.get(`/order/${id}`);
+    return response.data;
+  } catch (err) {
+    console.log(err);
+  }
+};
