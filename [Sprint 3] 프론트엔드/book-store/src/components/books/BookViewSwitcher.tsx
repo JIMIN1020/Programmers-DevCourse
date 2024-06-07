@@ -3,7 +3,7 @@ import styled from "styled-components";
 import Button from "../common/Button";
 import { FaList, FaTh } from "react-icons/fa";
 import { useSearchParams } from "react-router-dom";
-import { QUERYSTRING } from "../../constants/queryString";
+import { QUERYSTRING } from "@/constants/queryString";
 
 const viewOptions = [
   { value: "list", icon: <FaList /> },

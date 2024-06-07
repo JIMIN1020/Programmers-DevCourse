@@ -2,9 +2,9 @@ import React from "react";
 import styled from "styled-components";
 import { FaSignInAlt, FaRegUser } from "react-icons/fa";
 import { Link } from "react-router-dom";
-import { useCategory } from "../../hooks/useCategory";
-import { Category } from "../../models/category.model";
-import { useAuthStore } from "../../store/authStore";
+import { useCategory } from "@/hooks/useCategory";
+import { Category } from "@/models/category.model";
+import { useAuthStore } from "@/store/authStore";
 
 function Header() {
   const category = useCategory();
