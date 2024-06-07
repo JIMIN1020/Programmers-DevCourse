@@ -11,7 +11,19 @@ import Empty from "../components/common/Empty";
 import { Link } from "react-router-dom";
 
 function Books() {
-  const { books, isEmpty, pagination } = useBooks();
+  const { books, isEmpty, pagination, isBooksLoading } = useBooks();
+
+  if (isEmpty)
+    return (
+      <Empty
+        icon={<FaSmileWink />}
+        title="검색 결과가 없습니다."
+        description={<Link to="/books">전체 검색 결과로 이동</Link>}
+      />
+    );
+
+  if (isBooksLoading) return <div>loading...</div>;
+
   return (
     <>
       <Title size="lg">도서 검색 결과</Title>
@@ -20,16 +32,8 @@ function Books() {
           <BookFilter />
           <BookViewSwitcher />
         </Wrapper>
-        {isEmpty ? (
-          <Empty
-            icon={<FaSmileWink />}
-            title="검색 결과가 없습니다."
-            description={<Link to="/books">전체 검색 결과로 이동</Link>}
-          />
-        ) : (
-          <BookList books={books} />
-        )}
-        <Pagination pagination={pagination} />
+        {books && <BookList books={books} />}
+        {pagination && <Pagination pagination={pagination} />}
       </BooksStyle>
     </>
   );

@@ -12,7 +12,6 @@ export const fetchBooks = async (params: FetchBooksParams) => {
     const response = await httpClient.get(`/book`, {
       params: params,
     });
-
     return response.data;
   } catch (err) {
     return {
