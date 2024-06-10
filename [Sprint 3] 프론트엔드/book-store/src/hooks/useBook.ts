@@ -53,7 +53,7 @@ export const useBook = (bookId: string | undefined) => {
     }
   };
 
-  const addToCart = async (count: number) => {
+  const addToCart = (count: number) => {
     // 도서 데이터가 없는 경우
     if (!book) return;
 
@@ -62,7 +62,7 @@ export const useBook = (bookId: string | undefined) => {
       return;
     }
 
-    await addCart({
+    addCart({
       bookId: book.id,
       quantity: count,
     }).then(() => {
