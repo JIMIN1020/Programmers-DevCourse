@@ -1,17 +1,30 @@
-import React from "react";
+import React, { useEffect, useRef } from "react";
 import styled from "styled-components";
 import Title from "../components/common/Title";
 import BookFilter from "../components/books/BookFilter";
 import BookList from "../components/books/BookList";
 import { FaSmileWink } from "react-icons/fa";
-import Pagination from "../components/books/Pagination";
 import BookViewSwitcher from "../components/books/BookViewSwitcher";
-import { useBooks } from "../hooks/useBooks";
 import Empty from "../components/common/Empty";
 import { Link } from "react-router-dom";
+import { useBooksInfinite } from "@/hooks/useBooksInfinite";
+import Button from "@/components/common/Button";
+import { useIntersectionObserver } from "@/hooks/useIntersectionObserver";
 
 function Books() {
-  const { books, isEmpty, pagination, isBooksLoading } = useBooks();
+  const { books, isEmpty, isBooksLoading, fetchNextPage, hasNextPage } =
+    useBooksInfinite();
+
+  const moreRef = useIntersectionObserver(([entry]) => {
+    if (entry.isIntersecting) {
+      loadMore();
+    }
+  }, {});
+
+  const loadMore = () => {
+    if (!hasNextPage) return;
+    fetchNextPage();
+  };
 
   if (isEmpty)
     return (
@@ -33,7 +46,17 @@ function Books() {
           <BookViewSwitcher />
         </Wrapper>
         {books && <BookList books={books} />}
-        {pagination && <Pagination pagination={pagination} />}
+        {/* {pagination && <Pagination pagination={pagination} />} */}
+        <div className="more" ref={moreRef}>
+          <Button
+            size="md"
+            scheme="normal"
+            onClick={() => fetchNextPage()}
+            disabled={!hasNextPage}
+          >
+            {hasNextPage ? "더보기" : "마지막 페이지"}
+          </Button>
+        </div>
       </BooksStyle>
     </>
   );
